@@ -64,13 +64,14 @@ class PhotoAlbum:
 
 	def thumbnails(self):
 		t_size = (180,180)
-		thumbnails = []
+		
 		for pic in self.filenames:
 			im = Image.open(pic)
-			thumbnails.append(im.thumbnail(t_size))
-		return thumbnails
+			im.thumbnail(t_size)
+			im.show()
+		
 
-	def change_cover(self, img_name:
+	def change_cover(self, img_name):
 		pos = self.filenames.index(img_name)
 		self.filenames[0], self.filenames[pos] = self.filenames[pos], self.filenames[0]
 
@@ -79,7 +80,8 @@ class PhotoAlbum:
 		im2 = Image.open(img2)
 		color_im1 = im1.convert('RGBA')
 		color_im2 = im2.convert('RGBA')
-		blended = Image.blend(color_im1, color_im2, alpha)
+
+		blended = Image.blend(color_im1.resize((300,300)), color_im2.resize((300,300)), alpha)
 		blended.show()
 
 	def set_size(self, h, w, img):
@@ -100,10 +102,21 @@ class PhotoAlbum:
 
 
 # Write some sample code with comments to show how your PhotoAlbum class methods work, here:
-fnames_lst = []
+fnames_lst = ["box.JPG", "abstract.jpg", "dots.jpg"]
 pictures = PhotoAlbum(fnames_lst)
+print(pictures)
 
+pictures.thumbnails()
 
+pictures.change_cover("dots.jpg")
+
+pictures.greyscaled_first()
+
+pictures.blend("abstract.jpg", "dots.jpg", 0.5)
+
+pictures.set_size(500, 200, "box.jpg")
+
+pictures.blur("box.jpg")
 
 
 
