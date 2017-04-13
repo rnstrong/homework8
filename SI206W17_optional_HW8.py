@@ -6,8 +6,8 @@ import glob, os # tools to help you deal with files, in standard library, not ne
 ## SI 206 Winter 2017
 ## Optional HW: Building an Album
 
-## Comment with your name:
-## Anyone you worked with on this assignment:
+## Comment with your name: Renee Armstrong
+## Anyone you worked with on this assignment: N/A
 
 ## The score for this assignment can replace your lowest score on HW 2 - HW 7. 
 ## It is due THURSDAY, APRIL 13 at 11:59 PM and cannot be submitted late, because it is due so soon before the end of classes.
@@ -20,16 +20,59 @@ import glob, os # tools to help you deal with files, in standard library, not ne
 
 ## Creating an instance won't work if the file names don't exist, and won't work if the fnames_lst input is empty. There must be at least one photo file, and all file names in that list must represent real image files.
 
+class PhotoAlbum:
+	def __init__(self, filenames):
+		self.filenames = filenames
+
+	def greyscaled_first(self):
+
+		im = Image.open(self.filenames[0])
+		gray_im = im.convert('L')
+		gray_im.show()
+
+	def thumbnails(self):
+		t_size = (180,180)
+		thumbnails = []
+		for pic in self.filenames:
+			im = Image.open(pic)
+			thumbnails.append(im.thumbnail(t_size))
+		return thumbnails
+
+	def change_cover(self, img_name):
+		pos = self.filenames.index(img_name)
+		self.filenames[0], self.filenames[pos] = self.filenames[pos], self.filenames[0]
+
+	def blend(self, img1, img2, alpha):
+		im1 = Image.open(img1)
+		im2 = Image.open(img2)
+		color_im1 = im1.convert('RGBA')
+		color_im2 = im2.convert('RGBA')
+		blended = Image.blend(color_im1, color_im2, alpha)
+		blended.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## PART 2: The class should contain at least 6 additional methods which allow you to manipulate either one particular image in the album or all of the images in the album at once.
 
 ## It also might be nice to include a string method that represents a printed (non-image) representation of this photo album data...
 
 ## At least one of the methods you create MUST show either one of the images (per input specification, e.g. invoke a method to say "show me the first one" or "show me the image at index 4"...) or show ALL of the images somehow. Everything else is up to you. Here are some suggestions/possibilities:
 
-## A method that creates thumbnails of all the images and saves a list of them in a thumbnails instance variable
-## A method that allows you to change the cover photo
-## A method that allows you to blend a random set of 2 photos, or a specific set of 2 photos (note that the photos must all be the same size and the same mode for this to work!)
-## A method that makes all or one of the photos greyscaled and shows the first one
+### A method that creates thumbnails of all the images and saves a list of them in a thumbnails instance variable
+### A method that allows you to change the cover photo
+### A method that allows you to blend a random set of 2 photos, or a specific set of 2 photos (note that the photos must all be the same size and the same mode for this to work!)
+### A method that makes all or one of the photos greyscaled and shows the first one
 ## A method that allows you to pick a new size and resize one of the album images
 ## A method that allows you to select part of an image, given certain input to determine what image to select from, and how much to select
 ## ...
